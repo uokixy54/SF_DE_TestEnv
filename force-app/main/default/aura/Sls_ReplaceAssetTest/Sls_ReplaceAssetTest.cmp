@@ -1,0 +1,31 @@
+<aura:component controller="Sls_ReplaceAssetController" implements="force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    <aura:attribute name="isLoading" type="Boolean" default="true" />
+
+    <aura:if isTrue="{!v.isLoading}">
+        <div class="slds-p-horizontal--small">
+            <br/><br/><br/>
+            <p style="font-size: 17px;">ローディングしています。</p>
+            <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+
+    <aura:if isTrue="{!!v.isLoading}">
+        <lightning:recordEditForm
+            objectApiName="TestObjectParent__c"
+            onsubmit="{!c.handleSubmit}">
+
+            <lightning:messages/>
+
+            <lightning:inputField fieldName="Name"/>
+            <lightning:inputField fieldName="Field1__c"/>
+
+            <lightning:button type="submit" label="保存" variant="brand"/>
+        </lightning:recordEditForm>
+    </aura:if>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+</aura:component>

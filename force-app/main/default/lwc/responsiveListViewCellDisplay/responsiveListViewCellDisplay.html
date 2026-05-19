@@ -1,0 +1,100 @@
+<template>
+    <template if:true={isTextType}>
+        <span class="cell-value" title={value}>{displayValue}</span>
+    </template>
+    
+    <template if:true={isBooleanType}>
+        <lightning-icon 
+            icon-name={booleanIcon}
+            size="x-small"
+            variant={booleanVariant}
+            alternative-text={booleanLabel}>
+        </lightning-icon>
+    </template>
+    
+    <template if:true={isDateType}>
+        <lightning-formatted-date-time 
+            value={value}
+            year="numeric"
+            month="2-digit"
+            day="2-digit">
+        </lightning-formatted-date-time>
+    </template>
+    
+    <template if:true={isDateTimeType}>
+        <lightning-formatted-date-time 
+            value={value}
+            year="numeric"
+            month="2-digit"
+            day="2-digit"
+            hour="2-digit"
+            minute="2-digit">
+        </lightning-formatted-date-time>
+    </template>
+    
+    <template if:true={isTimeType}>
+        <lightning-formatted-time value={value}></lightning-formatted-time>
+    </template>
+    
+    <template if:true={isNumberType}>
+        <lightning-formatted-number 
+            value={value}
+            format-style="decimal"
+            minimum-fraction-digits="0"
+            maximum-fraction-digits="2">
+        </lightning-formatted-number>
+    </template>
+    
+    <template if:true={isCurrencyType}>
+        <lightning-formatted-number 
+            value={value}
+            format-style="currency"
+            currency-code="JPY">
+        </lightning-formatted-number>
+    </template>
+    
+    <template if:true={isPercentType}>
+        <lightning-formatted-number 
+            value={percentValue}
+            format-style="percent"
+            minimum-fraction-digits="0"
+            maximum-fraction-digits="2">
+        </lightning-formatted-number>
+    </template>
+    
+    <template if:true={isPhoneType}>
+        <lightning-formatted-phone value={value}></lightning-formatted-phone>
+    </template>
+    
+    <template if:true={isEmailType}>
+        <lightning-formatted-email value={value}></lightning-formatted-email>
+    </template>
+    
+    <template if:true={isUrlType}>
+        <lightning-formatted-url 
+            value={value}
+            target="_blank"
+            label={urlLabel}>
+        </lightning-formatted-url>
+    </template>
+    
+    <template if:true={isReferenceType}>
+        <a href={referenceUrl} target="_blank" class="reference-link">
+            {displayValue}
+        </a>
+    </template>
+    
+    <template if:true={isPicklistType}>
+        <span class="picklist-value">{displayValue}</span>
+    </template>
+    
+    <template if:true={isMultiPicklistType}>
+        <template for:each={multiPicklistValues} for:item="pickValue">
+            <lightning-badge key={pickValue} label={pickValue} class="slds-m-right_xx-small"></lightning-badge>
+        </template>
+    </template>
+    
+    <template if:true={isTextAreaType}>
+        <div class="textarea-value" title={value}>{textAreaDisplayValue}</div>
+    </template>
+</template>

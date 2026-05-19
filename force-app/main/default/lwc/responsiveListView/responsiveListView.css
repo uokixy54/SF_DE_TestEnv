@@ -1,0 +1,266 @@
+.responsive-list-view {
+    min-height: 200px;
+}
+
+/* 検索ボックス */
+.search-box {
+    width: 250px;
+}
+
+/* テーブルコンテナ */
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* インライン編集ボタン */
+.slds-cell-edit__button {
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+}
+
+tr:hover .slds-cell-edit__button,
+.slds-cell-edit__button:focus {
+    opacity: 1;
+}
+
+/* 一括編集パネル */
+.bulk-edit-panel {
+    background-color: #f3f3f3;
+}
+
+.bulk-edit-value-input {
+    min-height: 70px;
+}
+
+/* アクションバー */
+.action-bar {
+    background-color: #fafafa;
+}
+
+/* レスポンシブ表示切り替え */
+.desktop-view {
+    display: block;
+}
+
+.mobile-view {
+    display: none;
+}
+
+/* モバイルレイアウト */
+.mobile-card-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mobile-card-item {
+    width: 100%;
+}
+
+.mobile-tile-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.mobile-tile-item {
+    width: 100%;
+}
+
+/* モバイルフィールド表示 */
+.mobile-field {
+    margin-bottom: 0.75rem;
+}
+
+.mobile-field:last-child {
+    margin-bottom: 0;
+}
+
+.mobile-field-label {
+    font-size: 0.75rem;
+    color: #3e3e3c;
+    text-transform: uppercase;
+    letter-spacing: 0.0625rem;
+    margin-bottom: 0.25rem;
+}
+
+.mobile-field-value {
+    font-size: 0.875rem;
+    color: #080707;
+    word-break: break-word;
+}
+
+/* レスポンシブブレークポイント */
+@media screen and (max-width: 768px) {
+    .desktop-view {
+        display: none;
+    }
+    
+    .mobile-view {
+        display: block;
+    }
+    
+    .search-box {
+        width: 100%;
+    }
+    
+    /* モバイルでのカード内余白調整 */
+    .slds-card__header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .slds-card__body {
+        padding: 0 1rem;
+    }
+    
+    .slds-card__footer {
+        padding: 0.75rem 1rem;
+    }
+    
+    /* ページネーションのレスポンシブ対応 */
+    .slds-card__footer .slds-grid {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .slds-card__footer .slds-col {
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* モバイルでのボタングループ */
+    .slds-button-group {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+}
+
+/* タブレット向け調整 */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .mobile-tile-layout {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+
+/* アニメーション */
+.slds-card {
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.mobile-tile-item .slds-card:hover,
+.mobile-card-item .slds-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.16);
+}
+
+/* ローディング状態 */
+.responsive-list-view[data-loading="true"] {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* メッセージ表示 */
+.slds-notify_alert {
+    margin: 1rem;
+    position: relative;
+}
+
+.slds-alert_success {
+    background-color: #04844b;
+    color: white;
+}
+
+.slds-alert_warning {
+    background-color: #fe9339;
+    color: white;
+}
+
+.slds-alert_error {
+    background-color: #c23934;
+    color: white;
+}
+
+.slds-notify__close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: inherit;
+}
+
+/* チェックボックスのアライメント */
+lightning-input[type="checkbox"] {
+    display: inline-block;
+}
+
+/* ソートアイコン */
+.slds-button_icon-bare {
+    vertical-align: middle;
+}
+
+/* 選択された行のハイライト */
+tr:has(lightning-input[type="checkbox"]:checked) {
+    background-color: #f3f3f3;
+}
+
+/* 編集モードのスタイル */
+tr[data-edit-mode="true"] {
+    background-color: #faffbd;
+}
+
+/* ページ番号ボタンのスタイル */
+.slds-button-group lightning-button {
+    min-width: 2.5rem;
+}
+
+/* スクロールバーのスタイル（Webkit系ブラウザ） */
+.table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* アクセシビリティ向上 */
+.slds-button:focus,
+.slds-input:focus,
+lightning-input:focus-within,
+lightning-combobox:focus-within {
+    outline: 2px solid #1589ee;
+    outline-offset: 2px;
+}
+
+/* 印刷対応 */
+@media print {
+    .slds-card__header,
+    .slds-card__footer,
+    .action-bar,
+    .bulk-edit-panel,
+    .slds-cell-edit__button {
+        display: none !important;
+    }
+    
+    .desktop-view {
+        display: block !important;
+    }
+    
+    .mobile-view {
+        display: none !important;
+    }
+    
+    .slds-card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+}

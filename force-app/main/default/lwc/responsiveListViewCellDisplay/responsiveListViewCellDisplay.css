@@ -1,0 +1,54 @@
+.cell-value {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.reference-link {
+    color: #0070d2;
+    text-decoration: none;
+}
+
+.reference-link:hover {
+    text-decoration: underline;
+}
+
+.picklist-value {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    background-color: #f3f3f3;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.textarea-value {
+    max-width: 300px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.4;
+}
+
+/* 数値の右寄せ */
+:host([data-type="number"]),
+:host([data-type="currency"]),
+:host([data-type="percent"]) {
+    display: block;
+    text-align: right;
+}
+
+/* 日付・時刻の中央寄せ */
+:host([data-type="date"]),
+:host([data-type="datetime"]),
+:host([data-type="time"]) {
+    display: block;
+    text-align: center;
+}
+
+/* モバイル表示時の調整 */
+@media screen and (max-width: 768px) {
+    .textarea-value {
+        max-width: 100%;
+    }
+}

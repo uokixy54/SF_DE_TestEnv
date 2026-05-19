@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Responsive List View</masterLabel>
+    <description>レスポンシブ対応の高機能リストビューコンポーネント</description>
+    <targets>
+        <target>lightning__RecordPage</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage,lightning__AppPage,lightning__HomePage">
+            <!-- オブジェクト設定 -->
+            <property name="objectApiName" type="String" required="true" label="オブジェクトAPI名" 
+                      description="表示するオブジェクトのAPI名（例：Account, Contact, CustomObject__c）" />
+            
+            <property name="fieldsToDisplay" type="String" required="true" label="表示項目（カンマ区切り）"
+                      description="表示する項目のAPI名をカンマ区切りで指定（例：Name, Type, Industry）" />
+            
+            <!-- 条件設定 -->
+            <property name="whereClause" type="String" label="WHERE条件"
+                      description="SOQLのWHERE句（例：Type = 'Customer' AND Industry != null）" />
+            
+            <property name="orderBy" type="String" label="並び順"
+                      description="SOQL ORDER BY句（例：Name ASC, CreatedDate DESC）" />
+            
+            <!-- 表示設定 -->
+            <property name="pageSize" type="Integer" default="20" label="1ページあたりの表示件数"
+                      description="1ページに表示するレコード数（5〜100）" />
+            
+            <property name="enableInlineEdit" type="Boolean" default="true" label="インライン編集を有効化"
+                      description="レコードのインライン編集機能を有効にする" />
+            
+            <property name="enableBulkEdit" type="Boolean" default="true" label="一括編集を有効化"
+                      description="複数レコードの一括編集機能を有効にする" />
+            
+            <property name="enableSearch" type="Boolean" default="true" label="検索機能を有効化"
+                      description="リアルタイム検索機能を有効にする" />
+            
+            <property name="enableSort" type="Boolean" default="true" label="ソート機能を有効化"
+                      description="カラムヘッダークリックによるソート機能を有効にする" />
+            
+            <!-- スマートフォン表示設定 -->
+            <property name="mobileDisplayFields" type="String" label="モバイル表示項目（カンマ区切り）"
+                      description="モバイル表示で表示する項目。未指定の場合は最初の5項目" />
+            
+            <property name="mobileLayoutType" type="String" datasource="card,tile" default="card" label="モバイルレイアウト"
+                      description="モバイル表示のレイアウトタイプ（card：縦並び、tile：グリッド）" />
+        </targetConfig>
+        
+        <!-- コミュニティサイト用の設定 -->
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="objectApiName" type="String" label="オブジェクトAPI名" 
+                      description="表示するオブジェクトのAPI名（例：Account, Contact, CustomObject__c）" />
+            
+            <property name="fieldsToDisplay" type="String" label="表示項目（カンマ区切り）"
+                      description="表示する項目のAPI名をカンマ区切りで指定（例：Name, Type, Industry）" />
+            
+            <property name="whereClause" type="String" label="WHERE条件"
+                      description="SOQLのWHERE句（例：Type = 'Customer' AND Industry != null）" />
+            
+            <property name="orderBy" type="String" label="並び順"
+                      description="SOQL ORDER BY句（例：Name ASC, CreatedDate DESC）" />
+            
+            <property name="pageSize" type="Integer" default="20" label="1ページあたりの表示件数"
+                      description="1ページに表示するレコード数（5〜100）" />
+            
+            <property name="enableInlineEdit" type="Boolean" default="true" label="インライン編集を有効化"
+                      description="レコードのインライン編集機能を有効にする" />
+            
+            <property name="enableBulkEdit" type="Boolean" default="true" label="一括編集を有効化"
+                      description="複数レコードの一括編集機能を有効にする" />
+            
+            <property name="enableSearch" type="Boolean" default="true" label="検索機能を有効化"
+                      description="リアルタイム検索機能を有効にする" />
+            
+            <property name="enableSort" type="Boolean" default="true" label="ソート機能を有効化"
+                      description="カラムヘッダークリックによるソート機能を有効にする" />
+            
+            <property name="mobileDisplayFields" type="String" label="モバイル表示項目（カンマ区切り）"
+                      description="モバイル表示で表示する項目。未指定の場合は最初の5項目" />
+            
+            <property name="mobileLayoutType" type="String" datasource="card,tile" default="card" label="モバイルレイアウト"
+                      description="モバイル表示のレイアウトタイプ（card：縦並び、tile：グリッド）" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

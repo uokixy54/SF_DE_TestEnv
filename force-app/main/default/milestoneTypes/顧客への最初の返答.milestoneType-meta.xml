@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MilestoneType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>エージェントが顧客に最初の返答を送信するまでの時間に関する非定期的なマイルストーンを設定します。</description>
+    <recurrenceType>none</recurrenceType>
+</MilestoneType>

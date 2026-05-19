@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Case List">
+        <!-- basic Datatable -->
+        <lightning-datatable
+            class="slds-m-around_medium"
+            key-field="id"
+            data={cases}
+            columns={columns}></lightning-datatable>
+
+        <!-- custom Datatable -->
+        <c-custom-datatable
+            class="slds-m-around_medium"
+            key-field="id"
+            data={cases}
+            columns={columns}></c-custom-datatable>
+    </lightning-card>
+</template>

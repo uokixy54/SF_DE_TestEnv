@@ -1,0 +1,11 @@
+<aura:component
+    implements="lightning:actionOverride, lightning:hasPageReference"
+    controller="Tec_NewMainteEquipmentController">
+
+    <aura:attribute name="parentRecordId" type="String" />
+
+    <aura:handler name="init"   action="{!c.doInit}" value="this" />
+    <aura:handler name="change" action="{!c.doInit}" value="{!v.pageReference}" />
+
+
+</aura:component>

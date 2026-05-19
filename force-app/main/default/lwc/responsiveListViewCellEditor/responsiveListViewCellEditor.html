@@ -1,0 +1,200 @@
+<template>
+    <div class="cell-editor">
+        <!-- テキスト型 -->
+        <template if:true={isTextType}>
+            <lightning-input
+                type="text"
+                label={fieldLabel}
+                value={value}
+                variant="label-hidden"
+                required={field.required}
+                max-length={field.length}
+                onchange={handleChange}
+                data-field={field.fieldApiName}>
+            </lightning-input>
+        </template>
+        
+        <!-- 数値型 -->
+        <template if:true={isNumberType}>
+            <lightning-input
+                type="number"
+                label={fieldLabel}
+                value={value}
+                variant="label-hidden"
+                required={field.required}
+                step={numberStep}
+                onchange={handleChange}
+                data-field={field.fieldApiName}>
+            </lightning-input>
+        </template>
+        
+        <!-- 通貨型 -->
+        <template if:true={isCurrencyType}>
+            <lightning-input
+                type="number"
+                label={fieldLabel}
+                value={value}
+                variant="label-hidden"
+                required={field.required}
+                formatter="currency"
+                step="0.01"
+                onchange={handleChange}
+                data-field={field.fieldApiName}>
+            </lightning-input>
+        </template>
+        
+        <!-- パーセント型 -->
+        <template if:true={isPercentType}>
+            <lightning-input
+                type="number"
+                label={fieldLabel}
+                value={value}
+                variant="label-hidden"
+                required={field.required}
+                step="0.01"
+                onchange={handleChange}
+                data-field={field.fieldApiName}>
+            </lightning-input>
+        </template>
+        
+        <!-- Boolean型 -->
+        <template if:true={isBooleanType}>
+            <lightning-input
+                type="checkbox"
+                label={fieldLabel}
+                checked={value}
+                variant="label-hidden"
+                onchange={handleChange}
+                data-field={field.fieldApiName}>
+            </lightning-input>
+        </template>
+        
+        <!-- 日付型 -->
+        <template if:true={isDateType}>
+            <lightning-input
+                type="date"
+                label={fieldLabel}
+                value={value}
+                variant="label-hidden"
+                required={field.required}
+                onchange={handleChange}
+                data-field={field.fieldApiName}>
+            </lightning-input>
+        </template>
+        
+        <!-- 日時型 -->
+        <template if:true={isDateTimeType}>
+            <lightning-input
+                type="datetime"
+                label={fieldLabel}
+                value={value}
+                variant="label-hidden"
+                required={field.required}
+                onchange={handleChange}
+                data-field={field.fieldApiName}>
+            </lightning-input>
+        </template>
+        
+        <!-- 時刻型 -->
+        <template if:true={isTimeType}>
+            <lightning-input
+                type="time"
+                label={fieldLabel}
+                value={value}
+                variant="label-hidden"
+                required={field.required}
+                onchange={handleChange}
+                data-field={field.fieldApiName}>
+            </lightning-input>
+        </template>
+        
+        <!-- 電話型 -->
+        <template if:true={isPhoneType}>
+            <lightning-input
+                type="tel"
+                label={fieldLabel}
+                value={value}
+                variant="label-hidden"
+                required={field.required}
+                pattern="[0-9-()+ ]*"
+                onchange={handleChange}
+                data-field={field.fieldApiName}>
+            </lightning-input>
+        </template>
+        
+        <!-- Email型 -->
+        <template if:true={isEmailType}>
+            <lightning-input
+                type="email"
+                label={fieldLabel}
+                value={value}
+                variant="label-hidden"
+                required={field.required}
+                onchange={handleChange}
+                data-field={field.fieldApiName}>
+            </lightning-input>
+        </template>
+        
+        <!-- URL型 -->
+        <template if:true={isUrlType}>
+            <lightning-input
+                type="url"
+                label={fieldLabel}
+                value={value}
+                variant="label-hidden"
+                required={field.required}
+                onchange={handleChange}
+                data-field={field.fieldApiName}>
+            </lightning-input>
+        </template>
+        
+        <!-- ピックリスト型 -->
+        <template if:true={isPicklistType}>
+            <lightning-combobox
+                name={field.fieldApiName}
+                label={fieldLabel}
+                value={value}
+                placeholder="選択してください"
+                options={picklistOptions}
+                variant="label-hidden"
+                required={field.required}
+                onchange={handleChange}>
+            </lightning-combobox>
+        </template>
+        
+        <!-- マルチピックリスト型 -->
+        <template if:true={isMultiPicklistType}>
+            <lightning-dual-listbox
+                name={field.fieldApiName}
+                label={fieldLabel}
+                source-label="選択可能"
+                selected-label="選択済み"
+                options={picklistOptions}
+                value={multiPicklistValues}
+                variant="label-hidden"
+                required={field.required}
+                onchange={handleMultiPicklistChange}>
+            </lightning-dual-listbox>
+        </template>
+        
+        <!-- テキストエリア型 -->
+        <template if:true={isTextAreaType}>
+            <lightning-textarea
+                label={fieldLabel}
+                value={value}
+                variant="label-hidden"
+                required={field.required}
+                max-length={field.length}
+                onchange={handleChange}
+                data-field={field.fieldApiName}>
+            </lightning-textarea>
+        </template>
+        
+        <!-- 参照型（ルックアップ） -->
+        <template if:true={isReferenceType}>
+            <div class="reference-field-message">
+                参照項目の編集は現在サポートされていません
+            </div>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,17 @@
+import { LightningElement, api } from 'lwc';
+
+export default class ShowFilesBtn extends LightningElement {
+    @api rowId;
+
+    handleClick() {
+        const event = new CustomEvent('showfiles', {
+            composed: true,
+            bubbles: true,
+            cancelable: true,
+            detail: {
+                rowId: this.rowId,
+            },
+        });
+        this.dispatchEvent(event);
+    }
+}

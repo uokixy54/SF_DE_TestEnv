@@ -1,0 +1,70 @@
+.cell-editor {
+    width: 100%;
+    min-width: 150px;
+}
+
+/* 入力フィールドの幅を100%に */
+.cell-editor lightning-input,
+.cell-editor lightning-combobox,
+.cell-editor lightning-textarea,
+.cell-editor lightning-dual-listbox {
+    width: 100%;
+}
+
+/* チェックボックスの中央寄せ */
+.cell-editor lightning-input[type="checkbox"] {
+    display: flex;
+    justify-content: center;
+}
+
+/* 参照フィールドメッセージ */
+.reference-field-message {
+    padding: 0.5rem;
+    background-color: #f3f3f3;
+    color: #706e6b;
+    font-size: 0.75rem;
+    text-align: center;
+    border-radius: 0.25rem;
+}
+
+/* デュアルリストボックスの高さ調整 */
+.cell-editor lightning-dual-listbox {
+    --slds-c-dualistbox-listbox-height: 120px;
+}
+
+/* モバイル表示時の調整 */
+@media screen and (max-width: 768px) {
+    .cell-editor {
+        min-width: 100%;
+    }
+    
+    /* モバイルでのデュアルリストボックス */
+    .cell-editor lightning-dual-listbox {
+        --slds-c-dualistbox-listbox-height: 150px;
+    }
+}
+
+/* フォーカス時のハイライト */
+.cell-editor lightning-input:focus-within,
+.cell-editor lightning-combobox:focus-within,
+.cell-editor lightning-textarea:focus-within {
+    outline: 2px solid #1589ee;
+    outline-offset: 1px;
+}
+
+/* 必須フィールドのインジケーター */
+.cell-editor [required] {
+    border-left: 3px solid #c23934;
+    padding-left: 0.25rem;
+}
+
+/* エラー状態 */
+.cell-editor .slds-has-error {
+    border-color: #c23934;
+}
+
+/* 無効化状態 */
+.cell-editor [disabled] {
+    background-color: #f3f3f3;
+    cursor: not-allowed;
+}

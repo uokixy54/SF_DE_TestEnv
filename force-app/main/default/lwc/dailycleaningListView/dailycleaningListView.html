@@ -1,0 +1,16 @@
+<template>
+    <div style="height: 300px;">
+        <c-dailycleaning-datatable
+                key-field="Id"
+                data={data}
+                columns={columns}
+                draft-values={draftValues}
+                onstartcleaning={startCleaning}
+                oncompletecleaning={completeCleaning}
+                onuploadfiles={uploadFiles}
+                onshowfiles={showFiles}
+                onsave={handleSave}
+                oncancel={handleCancel}>
+        </c-dailycleaning-datatable>
+    </div>
+</template>

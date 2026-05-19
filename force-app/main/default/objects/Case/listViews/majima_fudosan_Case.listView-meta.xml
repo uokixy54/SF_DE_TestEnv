@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>majima_fudosan_Case</fullName>
+    <filterScope>Queue</filterScope>
+    <label>眞嶋不動産</label>
+    <queue>majima_fudosan</queue>
+    <sharedTo>
+        <allInternalUsers></allInternalUsers>
+    </sharedTo>
+</ListView>

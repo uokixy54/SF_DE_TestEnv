@@ -1,0 +1,445 @@
+<template>
+    <div class="slds-card responsive-list-view">
+        <!-- ヘッダー部分 -->
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span>{objectLabel}</span>
+                    </h2>
+                </div>
+                <div class="slds-no-flex">
+                    <!-- 検索ボックス -->
+                    <template if:true={enableSearchValue}>
+                        <div class="slds-form-element search-box">
+                            <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left">
+                                <lightning-icon icon-name="utility:search" size="x-small" class="slds-icon slds-input__icon slds-input__icon_left"></lightning-icon>
+                                <input type="search" 
+                                       class="slds-input" 
+                                       placeholder="検索..." 
+                                       value={searchTerm}
+                                       onkeyup={handleSearch}
+                                       onchange={handleSearchChange} />
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </header>
+        </div>
+
+        <!-- ボディ部分 -->
+        <div class="slds-card__body">
+            <!-- 一括編集モード -->
+            <template if:true={isBulkEditMode}>
+                <div class="bulk-edit-panel slds-p-around_medium slds-border_bottom">
+                    <div class="slds-text-heading_small slds-m-bottom_small">一括編集</div>
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                            <lightning-combobox
+                                name="bulkEditField"
+                                label="編集する項目"
+                                value={bulkEditField}
+                                placeholder="項目を選択"
+                                options={editableFieldOptions}
+                                onchange={handleBulkEditFieldChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                            <template if:true={showBulkEditInput}>
+                                <div class="bulk-edit-value-input">
+                                    <template if:true={isBulkEditPicklist}>
+                                        <lightning-combobox
+                                            name="bulkEditValue"
+                                            label="新しい値"
+                                            value={bulkEditValue}
+                                            placeholder="値を選択"
+                                            options={bulkEditPicklistOptions}
+                                            onchange={handleBulkEditValueChange}>
+                                        </lightning-combobox>
+                                    </template>
+                                    <template if:false={isBulkEditPicklist}>
+                                        <lightning-input
+                                            name="bulkEditValue"
+                                            label="新しい値"
+                                            type={bulkEditInputType}
+                                            value={bulkEditValue}
+                                            onchange={handleBulkEditValueChange}>
+                                        </lightning-input>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-text-align_right">
+                            <div class="slds-m-top_large">
+                                <lightning-button
+                                    label="適用"
+                                    variant="brand"
+                                    onclick={applyBulkEdit}
+                                    disabled={disableBulkEditApply}>
+                                </lightning-button>
+                                <lightning-button
+                                    label="キャンセル"
+                                    variant="neutral"
+                                    onclick={cancelBulkEdit}
+                                    class="slds-m-left_x-small">
+                                </lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slds-text-color_weak slds-m-top_small">
+                        {selectedRecordCount} 件のレコードが選択されています
+                    </div>
+                </div>
+            </template>
+
+            <!-- アクションバー -->
+            <template if:false={isBulkEditMode}>
+                <template if:true={hasSelectedRecords}>
+                    <div class="action-bar slds-p-around_small slds-border_bottom">
+                        <template if:true={enableBulkEditValue}>
+                            <lightning-button
+                                label="一括編集"
+                                variant="neutral"
+                                onclick={startBulkEdit}
+                                icon-name="utility:edit">
+                            </lightning-button>
+                        </template>
+                        <span class="slds-m-left_medium slds-text-color_weak">
+                            {selectedRecordCount} 件選択中
+                        </span>
+                    </div>
+                </template>
+            </template>
+
+            <!-- メッセージ表示 -->
+            <template if:true={successMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_success slds-m-around_medium" role="alert">
+                    <span class="slds-assistive-text">成功</span>
+                    <h2>{successMessage}</h2>
+                    <button class="slds-button slds-button_icon slds-notify__close slds-button_icon-small" 
+                            title="閉じる" onclick={clearMessages}>
+                        <lightning-icon icon-name="utility:close" size="small" alternative-text="閉じる"></lightning-icon>
+                    </button>
+                </div>
+            </template>
+            
+            <template if:true={warningMessage}>
+                <div class="slds-notify slds-notify_alert slds-alert_warning slds-m-around_medium" role="alert">
+                    <span class="slds-assistive-text">警告</span>
+                    <h2>{warningMessage}</h2>
+                    <button class="slds-button slds-button_icon slds-notify__close slds-button_icon-small" 
+                            title="閉じる" onclick={clearMessages}>
+                        <lightning-icon icon-name="utility:close" size="small" alternative-text="閉じる"></lightning-icon>
+                    </button>
+                </div>
+            </template>
+            
+            <template if:true={error}>
+                <div class="slds-notify slds-notify_alert slds-alert_error slds-m-around_medium" role="alert">
+                    <span class="slds-assistive-text">エラー</span>
+                    <h2>{error}</h2>
+                    <button class="slds-button slds-button_icon slds-notify__close slds-button_icon-small" 
+                            title="閉じる" onclick={clearMessages}>
+                        <lightning-icon icon-name="utility:close" size="small" alternative-text="閉じる"></lightning-icon>
+                    </button>
+                </div>
+            </template>
+
+            <!-- ローディング -->
+            <template if:true={isLoading}>
+                <div class="slds-is-relative slds-p-around_large">
+                    <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- データ表示 -->
+            <template if:false={isLoading}>
+                <template if:true={hasData}>
+                    <!-- デスクトップビュー（テーブル） -->
+                    <div class="desktop-view">
+                        <div class="table-container">
+                            <table class="slds-table slds-table_bordered slds-table_col-bordered">
+                                <thead>
+                                    <tr class="slds-line-height_reset">
+                                        <th scope="col" class="slds-text-align_center" style="width: 3rem;">
+                                            <lightning-input
+                                                type="checkbox"
+                                                variant="label-hidden"
+                                                checked={allSelected}
+                                                onchange={handleSelectAll}>
+                                            </lightning-input>
+                                        </th>
+                                        <template for:each={columns} for:item="column">
+                                            <th key={column.fieldApiName} scope="col" class={column.cellClass}>
+                                                <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate">
+                                                    <span class="slds-truncate" title={column.label}>
+                                                        {column.label}
+                                                    </span>
+                                                    <template if:true={column.sortable}>
+                                                        <button class="slds-button slds-button_icon slds-button_icon-bare slds-m-left_xx-small"
+                                                                title="ソート"
+                                                                onclick={handleSort}
+                                                                data-field={column.fieldApiName}>
+                                                            <lightning-icon 
+                                                                icon-name={column.sortIcon}
+                                                                size="x-small"
+                                                                alternative-text="ソート">
+                                                            </lightning-icon>
+                                                        </button>
+                                                    </template>
+                                                </div>
+                                            </th>
+                                        </template>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={displayRecords} for:item="record">
+                                        <tr key={record.Id} class="slds-hint-parent">
+                                            <td class="slds-text-align_center">
+                                                <lightning-input
+                                                    type="checkbox"
+                                                    variant="label-hidden"
+                                                    checked={record.selected}
+                                                    data-id={record.Id}
+                                                    onchange={handleRecordSelect}>
+                                                </lightning-input>
+                                            </td>
+                                            <template for:each={record.cells} for:item="cell">
+                                                <td key={cell.fieldApiName} class={cell.column.cellClass}>
+                                                    <template if:true={record.editMode}>
+                                                        <template if:true={cell.column.updateable}>
+                                                            <c-responsive-list-view-cell-editor
+                                                                record-id={record.Id}
+                                                                field={cell.column}
+                                                                value={cell.value}
+                                                                onvaluechange={handleCellValueChange}>
+                                                            </c-responsive-list-view-cell-editor>
+                                                        </template>
+                                                        <template if:false={cell.column.updateable}>
+                                                            <c-responsive-list-view-cell-display
+                                                                field={cell.column}
+                                                                value={cell.value}>
+                                                            </c-responsive-list-view-cell-display>
+                                                        </template>
+                                                    </template>
+                                                    <template if:false={record.editMode}>
+                                                        <div class="slds-grid slds-grid_align-spread">
+                                                            <c-responsive-list-view-cell-display
+                                                                field={cell.column}
+                                                                value={cell.value}>
+                                                            </c-responsive-list-view-cell-display>
+                                                            <template if:true={enableInlineEditValue}>
+                                                                <template if:true={cell.column.updateable}>
+                                                                    <template if:false={record.editMode}>
+                                                                        <button class="slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small"
+                                                                                tabindex="-1"
+                                                                                title="編集"
+                                                                                data-id={record.Id}
+                                                                                data-field={cell.column.fieldApiName}
+                                                                                onclick={startInlineEdit}>
+                                                                            <lightning-icon 
+                                                                                icon-name="utility:edit"
+                                                                                size="xx-small"
+                                                                                alternative-text="編集">
+                                                                            </lightning-icon>
+                                                                        </button>
+                                                                    </template>
+                                                                </template>
+                                                            </template>
+                                                        </div>
+                                                    </template>
+                                                </td>
+                                            </template>
+                                        </tr>
+                                        <template if:true={record.editMode}>
+                                            <tr key={record.editKey}>
+                                                <td colspan={columnCount} class="slds-p-around_small slds-text-align_right">
+                                                    <lightning-button
+                                                        label="保存"
+                                                        variant="brand"
+                                                        size="small"
+                                                        data-id={record.Id}
+                                                        onclick={saveInlineEdit}>
+                                                    </lightning-button>
+                                                    <lightning-button
+                                                        label="キャンセル"
+                                                        variant="neutral"
+                                                        size="small"
+                                                        class="slds-m-left_x-small"
+                                                        data-id={record.Id}
+                                                        onclick={cancelInlineEdit}>
+                                                    </lightning-button>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- モバイルビュー（カード/タイル） -->
+                    <div class="mobile-view">
+                        <div class={mobileLayoutClass}>
+                            <template for:each={displayRecords} for:item="record">
+                                <div key={record.Id} class={mobileItemClass}>
+                                    <article class="slds-card">
+                                        <div class="slds-card__header slds-grid">
+                                            <div class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                <div class="slds-media__body">
+                                                    <lightning-input
+                                                        type="checkbox"
+                                                        variant="label-hidden"
+                                                        checked={record.selected}
+                                                        data-id={record.Id}
+                                                        onchange={handleRecordSelect}>
+                                                    </lightning-input>
+                                                </div>
+                                                <div class="slds-no-flex">
+                                                    <template if:true={enableInlineEditValue}>
+                                                        <template if:false={record.editMode}>
+                                                            <lightning-button-icon
+                                                                icon-name="utility:edit"
+                                                                alternative-text="編集"
+                                                                title="編集"
+                                                                data-id={record.Id}
+                                                                onclick={startMobileEdit}>
+                                                            </lightning-button-icon>
+                                                        </template>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-card__body slds-card__body_inner">
+                                            <template if:true={record.editMode}>
+                                                <!-- モバイル編集モード -->
+                                                <template for:each={record.mobileCells} for:item="cell">
+                                                    <div key={cell.fieldApiName} class="slds-m-bottom_small">
+                                                        <template if:true={cell.column.updateable}>
+                                                            <c-responsive-list-view-cell-editor
+                                                                record-id={record.Id}
+                                                                field={cell.column}
+                                                                value={cell.value}
+                                                                show-label
+                                                                onvaluechange={handleCellValueChange}>
+                                                            </c-responsive-list-view-cell-editor>
+                                                        </template>
+                                                        <template if:false={cell.column.updateable}>
+                                                            <div class="slds-form-element">
+                                                                <span class="slds-form-element__label">{cell.column.label}</span>
+                                                                <div class="slds-form-element__control">
+                                                                    <c-responsive-list-view-cell-display
+                                                                        field={cell.column}
+                                                                        value={cell.value}>
+                                                                    </c-responsive-list-view-cell-display>
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </div>
+                                                </template>
+                                                <div class="slds-m-top_medium">
+                                                    <lightning-button
+                                                        label="保存"
+                                                        variant="brand"
+                                                        data-id={record.Id}
+                                                        onclick={saveInlineEdit}
+                                                        stretch-button>
+                                                    </lightning-button>
+                                                    <lightning-button
+                                                        label="キャンセル"
+                                                        variant="neutral"
+                                                        class="slds-m-top_x-small"
+                                                        data-id={record.Id}
+                                                        onclick={cancelInlineEdit}
+                                                        stretch-button>
+                                                    </lightning-button>
+                                                </div>
+                                            </template>
+                                            <template if:false={record.editMode}>
+                                                <!-- モバイル表示モード -->
+                                                <template for:each={record.mobileCells} for:item="cell">
+                                                    <div key={cell.fieldApiName} class="mobile-field">
+                                                        <div class="mobile-field-label">{cell.column.label}</div>
+                                                        <div class="mobile-field-value">
+                                                            <c-responsive-list-view-cell-display
+                                                                field={cell.column}
+                                                                value={cell.value}>
+                                                            </c-responsive-list-view-cell-display>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </template>
+                                        </div>
+                                    </article>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+
+                <!-- データなし -->
+                <template if:false={hasData}>
+                    <div class="slds-align_absolute-center slds-p-around_large">
+                        <div class="slds-text-align_center">
+                            <lightning-icon 
+                                icon-name="utility:info_alt" 
+                                size="large"
+                                class="slds-m-bottom_small">
+                            </lightning-icon>
+                            <p class="slds-text-heading_small">表示するデータがありません</p>
+                        </div>
+                    </div>
+                </template>
+            </template>
+        </div>
+
+        <!-- フッター（ページネーション） -->
+        <template if:true={showPagination}>
+            <div class="slds-card__footer">
+                <div class="slds-grid slds-grid_align-spread slds-grid_vertical-align-center">
+                    <div class="slds-col">
+                        <span class="slds-text-body_small slds-text-color_weak">
+                            {totalRecords} 件中 {recordRangeText} を表示
+                        </span>
+                    </div>
+                    <div class="slds-col">
+                        <div class="slds-button-group" role="group">
+                            <lightning-button
+                                label="前へ"
+                                icon-name="utility:chevronleft"
+                                onclick={previousPage}
+                                disabled={isFirstPage}>
+                            </lightning-button>
+                            <template for:each={pageNumbers} for:item="page">
+                                <lightning-button
+                                    key={page.number}
+                                    label={page.number}
+                                    variant={page.variant}
+                                    data-page={page.number}
+                                    onclick={goToPage}>
+                                </lightning-button>
+                            </template>
+                            <lightning-button
+                                label="次へ"
+                                icon-name="utility:chevronright"
+                                icon-position="right"
+                                onclick={nextPage}
+                                disabled={isLastPage}>
+                            </lightning-button>
+                        </div>
+                    </div>
+                    <div class="slds-col">
+                        <lightning-combobox
+                            name="pageSize"
+                            label="表示件数"
+                            value={pageSize}
+                            options={pageSizeOptions}
+                            variant="label-hidden"
+                            onchange={handlePageSizeChange}>
+                        </lightning-combobox>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

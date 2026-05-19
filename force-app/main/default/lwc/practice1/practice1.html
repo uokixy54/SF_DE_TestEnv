@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="WireTest" icon-name="custom:custom67">
+        <div class="slds-var-m-around_medium">
+            <h1 class="slds-text-heading_medium">SELECT VALUE</h1>
+            <div class="demo-only" style="padding:0.5rem;color:#ffffff;background:#16325c">{selectValue}</div>
+        </div>
+        <div class="slds-var-m-around_medium">
+            <lightning-combobox
+                label="Opportunity Phase"
+                value="None"
+                options={opportunityPhases}
+                onchange={handleChange}
+            ></lightning-combobox>
+        </div>
+    </lightning-card>
+</template>
