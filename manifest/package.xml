@@ -34,23 +34,11 @@
 	</types>
 	<types>
 		<members>*</members>
-		<name>AppMenu</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>AppointmentSchedulingPolicy</name>
-	</types>
-	<types>
-		<members>*</members>
 		<name>ApprovalProcess</name>
 	</types>
 	<types>
 		<members>*</members>
 		<name>AssignmentRules</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>Audience</name>
 	</types>
 	<types>
 		<members>*</members>
@@ -90,22 +78,6 @@
 	</types>
 	<types>
 		<members>*</members>
-		<name>CleanDataService</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>Community</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>CommunityTemplateDefinition</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>CommunityThemeDefinition</name>
-	</types>
-	<types>
-		<members>*</members>
 		<name>ConnectedApp</name>
 	</types>
 	<types>
@@ -119,10 +91,6 @@
 	<types>
 		<members>*</members>
 		<name>CspTrustedSite</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>CustomApplication</name>
 	</types>
 	<types>
 		<members>*</members>
@@ -466,15 +434,6 @@
 		<name>DelegateGroup</name>
 	</types>
 	<types>
-		<members>enablement/sfdcEnablement_EnablementWorkspace</members>
-		<members>site/test1</members>
-		<name>DigitalExperienceBundle</name>
-	</types>
-	<types>
-		<members>test1</members>
-		<name>DigitalExperienceConfig</name>
-	</types>
-	<types>
 		<members>*</members>
 		<name>DuplicateRule</name>
 	</types>
@@ -493,10 +452,6 @@
 	<types>
 		<members>Case</members>
 		<name>EscalationRules</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>ExperienceBundle</name>
 	</types>
 	<types>
 		<members>*</members>
@@ -618,14 +573,6 @@
 		<name>NavigationMenu</name>
 	</types>
 	<types>
-		<members>*</members>
-		<name>Network</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>NetworkBranding</name>
-	</types>
-	<types>
 		<members>NotificationTypeConfig</members>
 		<name>NotificationTypeConfig</name>
 	</types>
@@ -679,18 +626,6 @@
 	<types>
 		<members>*</members>
 		<name>PostTemplate</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>Profile</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>ProfilePasswordPolicy</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>ProfileSessionSetting</name>
 	</types>
 	<types>
 		<members>*</members>
@@ -752,10 +687,6 @@
 	</types>
 	<types>
 		<members>*</members>
-		<name>SiteDotCom</name>
-	</types>
-	<types>
-		<members>*</members>
 		<name>Skill</name>
 	</types>
 	<types>
@@ -769,10 +700,6 @@
 	<types>
 		<members>*</members>
 		<name>SynonymDictionary</name>
-	</types>
-	<types>
-		<members>*</members>
-		<name>TopicsForObjects</name>
 	</types>
 	<types>
 		<members>*</members>
